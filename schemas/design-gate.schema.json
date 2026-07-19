@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/design-gate.schema.json",
+  "title": "Bot Design Gate v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "gate_status", "design_ready", "implementation_planning_allowed", "runtime_apply_allowed", "design_readiness", "change_plans", "blockers"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotDesignGate"},
+    "gate_status": {"enum": ["missing_design_layer", "design_blocked", "missing_change_plan", "change_plan_blocked", "ready_for_implementation_planning"]},
+    "design_ready": {"type": "boolean"},
+    "implementation_planning_allowed": {"type": "boolean"},
+    "runtime_apply_allowed": {"const": false},
+    "design_readiness": {"type": "object"},
+    "change_plans": {"type": "array", "items": {"type": "object"}},
+    "summary": {"type": "object"},
+    "blockers": {"type": "array", "items": {"type": "object"}},
+    "next_steps": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

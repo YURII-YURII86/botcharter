@@ -1,0 +1,29 @@
+name: botctl checks
+on: [push, pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install . build
+      - run: botctl --help
+      - run: botctl --version
+      - run: python tools/release_check.py
+      - run: python tools/demo_public_alpha.py
+      - run: python tools/smoke_runtime_audit.py
+      - run: python tools/smoke_runtime_probe.py
+      - run: python tools/smoke_http_probe.py
+      - run: python tools/smoke_sqlite_probe.py
+      - run: python tools/smoke_adopt.py
+      - run: python -m py_compile tools/botctl/*.py tools/smoke_runtime_audit.py tools/smoke_runtime_probe.py tools/smoke_http_probe.py tools/smoke_sqlite_probe.py tools/smoke_adopt.py tools/demo_public_alpha.py tools/release_check.py
+      - run: python -m build
+      - run: python tools/inspect_distribution.py dist/*

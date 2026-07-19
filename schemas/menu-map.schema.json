@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/menu-map.schema.json",
+  "title": "Bot Menu Map v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "read_only", "roles", "commands", "menus", "callback_contract"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotMenuMap"},
+    "generated_at": {"type": "string"},
+    "project_path": {"type": "string"},
+    "read_only": {"const": true},
+    "confidence": {"type": "string"},
+    "notes": {"type": "array", "items": {"type": "string"}},
+    "roles": {"type": "array", "items": {"$ref": "#/$defs/role"}},
+    "commands": {"type": "array", "items": {"$ref": "#/$defs/command"}},
+    "menus": {"type": "array", "items": {"$ref": "#/$defs/menu"}},
+    "callback_contract": {"type": "array", "items": {"$ref": "#/$defs/callback"}},
+    "handlers_hint": {"type": "array", "items": {"type": "object"}},
+    "quality_gates": {"type": "array", "items": {"type": "object"}}
+  },
+  "$defs": {
+    "role": {"type": "object", "required": ["id"], "properties": {"id": {"type": "string"}, "title": {"type": "string"}}, "additionalProperties": true},
+    "command": {"type": "object", "required": ["command"], "properties": {"command": {"type": "string"}, "description": {"type": "string"}, "role_hint": {"type": "string"}, "source": {"type": "object"}}, "additionalProperties": true},
+    "menu": {"type": "object", "required": ["id", "buttons"], "properties": {"id": {"type": "string"}, "title": {"type": "string"}, "buttons": {"type": "array", "items": {"type": "object"}}, "visible_for_hint": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": true},
+    "callback": {"type": "object", "required": ["namespace", "patterns"], "properties": {"namespace": {"type": "string"}, "patterns": {"type": "array", "items": {"type": "string"}}, "allowed_roles_hint": {"type": "array", "items": {"type": "string"}}, "handlers_hint": {"type": "array", "items": {"type": "string"}}, "risk_notes": {"type": "array", "items": {"type": "string"}}, "guard_evidence": {"type": "object"}, "guard_status": {"type": "object"}}, "additionalProperties": true}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/sqlite-probe.schema.json",
+  "title": "Explicit immutable SQLite probe v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "generated_at", "read_only", "scope", "target", "summary", "check", "safety"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotSqliteIntegrityProbe"},
+    "generated_at": {"type": "string"},
+    "read_only": {"const": true},
+    "scope": {"const": "explicit_sqlite_quick_check"},
+    "target": {"type": "object", "required": ["path", "size_bytes"]},
+    "summary": {"type": "object", "required": ["status"]},
+    "check": {"type": "object", "required": ["state", "metadata_unchanged"]},
+    "safety": {"type": "object"}
+  }
+}

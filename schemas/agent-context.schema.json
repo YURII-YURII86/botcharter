@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/agent-context.schema.json",
+  "title": "Agent Context v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "mode", "generated_at", "project", "summary", "rules", "allowed_next_actions", "blocked_actions", "full_artifacts"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "AgentContext"},
+    "mode": {"enum": ["brief", "focused"]},
+    "generated_at": {"type": "string"},
+    "project": {"type": "object"},
+    "summary": {"type": "object"},
+    "rules": {"type": "array", "items": {"type": "string"}},
+    "allowed_next_actions": {"type": "array"},
+    "blocked_actions": {"type": "array"},
+    "full_artifacts": {"type": "object"}
+  },
+  "additionalProperties": true
+}

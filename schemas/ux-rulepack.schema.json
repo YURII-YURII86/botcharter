@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/ux-rulepack.schema.json",
+  "title": "Bot UX Rulepack v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "id", "rules"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotUXRulepack"},
+    "id": {"type": "string", "minLength": 1},
+    "source_skill": {"type": "string"},
+    "source_path": {"type": "string"},
+    "title": {"type": "string"},
+    "description": {"type": "string"},
+    "rules": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/rule"}}
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "required": ["id", "severity", "category", "title", "why", "recommendation"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]+$"},
+        "severity": {"enum": ["critical", "high", "medium", "low", "info"]},
+        "category": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "applies_to": {"type": "array", "items": {"type": "string"}},
+        "checks": {"type": "array", "items": {"type": "string"}},
+        "why": {"type": "string", "minLength": 1},
+        "recommendation": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

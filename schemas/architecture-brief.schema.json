@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/architecture-brief.schema.json",
+  "title": "Architecture Brief v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "generated_at", "project", "current_state", "rules"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "ArchitectureBrief"},
+    "generated_at": {"type": "string"},
+    "project": {"type": "object"},
+    "current_state": {"type": "object"},
+    "rules": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

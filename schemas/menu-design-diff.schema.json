@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/menu-design-diff.schema.json",
+  "title": "Bot Menu Design Diff v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "read_only", "summary", "sections", "issues"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotMenuDesignDiff"},
+    "generated_at": {"type": "string"},
+    "project_path": {"type": "string"},
+    "read_only": {"const": true},
+    "source_kinds": {"type": "object"},
+    "summary": {"type": "object", "required": ["status", "score"], "properties": {"status": {"enum": ["aligned", "partial", "diverged"]}, "score": {"type": "number", "minimum": 0, "maximum": 100}}, "additionalProperties": true},
+    "sections": {"type": "object", "required": ["roles", "commands", "callback_namespaces", "callback_patterns", "navigation", "dangerous_guards"], "additionalProperties": true},
+    "issues": {"type": "array", "items": {"$ref": "#/$defs/issue"}},
+    "recommended_next_steps": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "issue": {"type": "object", "required": ["id", "severity", "title", "why", "recommendation"], "properties": {"id": {"type": "string"}, "severity": {"enum": ["error", "warning", "info"]}, "title": {"type": "string"}, "why": {"type": "string"}, "evidence": {"type": "array"}, "recommendation": {"type": "string"}}, "additionalProperties": true}
+  },
+  "additionalProperties": true
+}

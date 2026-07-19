@@ -1,0 +1,31 @@
+version: 0.1.0
+dependencies:
+  public_python_packaging:
+    type: build_and_distribution_tooling
+    risks: [accidental_publication, private_metadata_disclosure, broken_distribution]
+    required_guards: [alpha_version, clean_environment_install, release_hygiene_check, explicit_owner_approval]
+
+  target_project_control_directory:
+    type: confirmed_local_filesystem_write
+    risks: [overwrite_existing_project_control, runtime_source_mutation, partial_adoption]
+    required_guards: [preview_by_default, explicit_confirm, no_overwrite, transactional_rollback, post_write_verify]
+
+  local_source_tree:
+    type: read_only_filesystem
+    risks: [secret_exposure, runtime_data_exposure, target_project_mutation]
+    required_guards: [allowlisted_source_extensions, unsafe_path_denylist, no_database_reads, before_after_tree_hash]
+
+  explicit_local_metadata:
+    type: read_only_operating_system_metadata
+    risks: [wrong_target, unsafe_path]
+    required_guards: [explicit_pid_or_path, metadata_only, symlink_rejection, no_content_read]
+
+  explicit_health_endpoint:
+    type: read_only_http_head
+    risks: [accidental_contact, redirect_to_untrusted_host, credentials_in_url]
+    required_guards: [explicit_confirmation, https_except_local_test, no_redirects, no_response_body, no_auth_headers]
+
+  explicit_sqlite_file:
+    type: immutable_read_only_database
+    risks: [personal_data_exposure, sidecar_creation, symlink_scope_escape]
+    required_guards: [explicit_confirmation, symlink_rejection, immutable_read_only_mode, fixed_integrity_query, no_row_or_schema_output]

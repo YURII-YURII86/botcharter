@@ -1,0 +1,10 @@
+version: 0.1.0
+callback_namespaces:
+  result: {purpose: "Approve, retry, or discard a generated result."}
+screens:
+  result_preview:
+    type: menu
+    buttons:
+      - {id: approve, action: approve_result}
+      - {id: retry, action: retry_processing}
+      - {id: discard, action: discard_result}

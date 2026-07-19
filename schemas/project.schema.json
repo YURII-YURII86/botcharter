@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/project.schema.json",
+  "title": "Botctl Project v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "id", "title", "language", "entry_policy", "paths", "naming_policy"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "Project"},
+    "id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "language": {"const": "ru"},
+    "primary_user": {"type": "string"},
+    "human_user": {"type": "string"},
+    "entry_policy": {"type": "object"},
+    "paths": {"type": "object"},
+    "naming_policy": {"type": "object"},
+    "safety_policy": {"type": "object"},
+    "artifact_policy": {"type": "object"},
+    "ux_policy": {"type": "object"}
+  },
+  "additionalProperties": true
+}

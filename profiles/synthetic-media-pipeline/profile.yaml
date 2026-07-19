@@ -1,0 +1,10 @@
+apiVersion: botctl.dev/v0
+kind: BotRuntimeAuditProfile
+id: synthetic-media-pipeline
+title: "Synthetic Media Pipeline Bot"
+specs_dir: specs
+read_only: true
+notes:
+  - "Synthetic Aiogram message bot without inline callback menus."
+  - "This profile is fictional and is not derived from a private repository."
+  - "Uses yt-dlp and ffmpeg subprocess pipeline."

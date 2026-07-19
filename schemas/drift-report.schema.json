@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/drift-report.schema.json",
+  "title": "Drift Report v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "generated_at", "scope", "summary", "items"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "DriftReport"},
+    "generated_at": {"type": "string"},
+    "scope": {"type": "string"},
+    "runtime_probe": {"type": "object"},
+    "summary": {"type": "object"},
+    "items": {"type": "array"}
+  },
+  "additionalProperties": true
+}

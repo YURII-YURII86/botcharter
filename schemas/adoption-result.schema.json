@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/adoption-result.schema.json",
+  "title": "Botctl project adoption result v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "project_path", "mode", "status", "read_only", "planned_paths", "next_steps"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotProjectAdoptionResult"},
+    "project_path": {"type": "string"},
+    "mode": {"enum": ["preview", "confirmed"]},
+    "status": {"enum": ["ready_to_adopt", "adopted", "already_adopted", "blocked"]},
+    "read_only": {"type": "boolean"},
+    "planned_paths": {"type": "array", "items": {"type": "string"}},
+    "created_paths": {"type": "array", "items": {"type": "string"}},
+    "next_steps": {"type": "array", "items": {"type": "string"}},
+    "verify_summary": {"type": "object"}
+  }
+}

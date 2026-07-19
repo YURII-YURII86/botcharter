@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://botctl.dev/schemas/response-system.schema.json",
+  "title":"Bot Response System v0",
+  "type":"object",
+  "required":["apiVersion","kind","knowledge_status","requires_review","production_design_allowed"],
+  "properties":{
+    "apiVersion":{"const":"botctl.dev/v0"},
+    "kind":{"const":"BotResponseSystem"},
+    "knowledge_status":{"enum":["draft","reviewed","confirmed","deprecated","missing"]},
+    "requires_review":{"type":"boolean"},
+    "production_design_allowed":{"const":false},
+    "responses":{"type":"array"},
+    "tone_rules":{"type":"array"},
+    "open_questions":{"type":"array","items":{"type":"string"}}
+  },
+  "additionalProperties":true
+}

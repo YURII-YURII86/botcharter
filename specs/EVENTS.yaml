@@ -1,0 +1,5 @@
+version: 0.1.0
+events: {}
+notes:
+  - "BotCharter does not emit product analytics events in the public alpha."
+  - "Runtime-bot event registries belong to adopted projects or fictional examples."

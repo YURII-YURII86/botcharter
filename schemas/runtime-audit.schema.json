@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/runtime-audit.schema.json",
+  "title": "Bot Runtime Source Audit v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "read_only", "target_project", "summary", "checks", "issues", "safety"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotRuntimeSourceAudit"},
+    "read_only": {"const": true},
+    "profile": {"type": "string"},
+    "target_project": {"type": "string"},
+    "summary": {"type": "object"},
+    "checks": {"type": "object"},
+    "issues": {"type": "array", "items": {"type": "object"}},
+    "safety": {
+      "type": "object",
+      "required": ["imports_target_code", "reads_runtime_databases", "contacts_network", "writes_target_project"],
+      "properties": {
+        "imports_target_code": {"const": false},
+        "reads_runtime_databases": {"const": false},
+        "contacts_network": {"const": false},
+        "writes_target_project": {"const": false}
+      }
+    }
+  },
+  "additionalProperties": true
+}

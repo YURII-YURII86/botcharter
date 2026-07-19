@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/graph.schema.json",
+  "title": "Bot Architecture Graph v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "id", "title", "nodes", "edges"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotArchitectureGraph"},
+    "id": {"type": "string"},
+    "title": {"type": "string"},
+    "description": {"type": "string"},
+    "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}}
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": ["id", "kind", "layer", "title", "lifecycle_status", "knowledge_status"],
+      "properties": {
+        "id": {"type": "string"},
+        "kind": {"enum": ["Product", "Capability", "Flow", "Event", "State", "Handler", "Tool", "MemoryStore", "ConfigRef", "DeployTarget", "Test", "TraceSink", "Policy"]},
+        "layer": {"type": "string"},
+        "title": {"type": "string"},
+        "description": {"type": "string"},
+        "lifecycle_status": {"enum": ["planned", "active", "deprecated", "removed", "experimental"]},
+        "knowledge_status": {"enum": ["inferred", "candidate", "confirmed", "rejected", "stale", "unknown"]},
+        "confidence": {"enum": ["high", "medium", "low", "unknown"]},
+        "risk_level": {"enum": ["low", "medium", "high", "critical"]},
+        "source": {"type": "object"},
+        "code_binding": {"type": "object"},
+        "change_control": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "edge": {
+      "type": "object",
+      "required": ["from", "to", "type"],
+      "properties": {
+        "from": {"type": "string"},
+        "to": {"type": "string"},
+        "type": {"enum": ["contains", "enables", "implements", "handles", "transitions_to", "uses", "stores_in", "reads_from", "requires", "deployed_to", "verified_by", "traced_by", "guards"]},
+        "title": {"type": "string"},
+        "confidence": {"enum": ["high", "medium", "low", "unknown"]},
+        "source": {"anyOf": [{"type": "string"}, {"type": "object"}]}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

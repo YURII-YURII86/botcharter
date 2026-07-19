@@ -1,0 +1,6 @@
+version: 0.1.0
+storage_model: none
+tables: {}
+notes:
+  - "BotCharter owns no runtime-bot database tables."
+  - "Storage examples must be fictional and must not reproduce private schemas."

@@ -1,0 +1,22 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://botctl.dev/schemas/change-plan-design.schema.json",
+  "title":"Bot Design ChangePlan v0",
+  "type":"object",
+  "required":["apiVersion","kind","change_id","knowledge_status","approval_status","intent","risk_level","verification_plan","rollback_plan","runtime_apply_allowed"],
+  "properties":{
+    "apiVersion":{"const":"botctl.dev/v0"},
+    "kind":{"const":"BotDesignChangePlan"},
+    "change_id":{"type":"string"},
+    "knowledge_status":{"enum":["draft","reviewed","confirmed","deprecated"]},
+    "approval_status":{"enum":["not_requested","reviewed","approved"]},
+    "intent":{"type":"string"},
+    "risk_level":{"enum":["low","medium","high","critical"]},
+    "verification_plan":{"type":"array","items":{"type":"string"}},
+    "rollback_plan":{"type":"array","items":{"type":"string"}},
+    "runtime_apply_allowed":{"const":false},
+    "approved_by":{"type":["string","null"]},
+    "approved_at":{"type":["string","null"]}
+  },
+  "additionalProperties":true
+}

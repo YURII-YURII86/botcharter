@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://botctl.dev/schemas/role-model.schema.json",
+  "title":"Bot Role Model v0",
+  "type":"object",
+  "required":["apiVersion","kind","knowledge_status","roles"],
+  "properties":{
+    "apiVersion":{"const":"botctl.dev/v0"},
+    "kind":{"const":"BotRoleModel"},
+    "knowledge_status":{"enum":["draft","reviewed","confirmed","deprecated","missing"]},
+    "roles":{"type":"array","items":{"type":"object","required":["id"],"properties":{"id":{"type":"string"},"title":{"type":"string"}},"additionalProperties":true}}
+  },
+  "additionalProperties":true
+}

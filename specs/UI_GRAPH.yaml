@@ -1,0 +1,6 @@
+version: 0.1.0
+callback_namespaces: {}
+screens: {}
+notes:
+  - "BotCharter is a CLI and does not own a Telegram runtime UI."
+  - "Runtime UI graphs belong to adopted projects or fictional examples."

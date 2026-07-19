@@ -1,0 +1,136 @@
+apiVersion: botctl.dev/v0
+kind: BotUXRulepack
+id: telegram_bot_builder_ux
+source_skill: telegram-bot-builder
+source_path: public:sanitized-telegram-bot-builder-contract
+title: Telegram Bot Builder UX Rulepack
+description: Machine-readable UX and safety rules extracted from the telegram-bot-builder skill contract.
+rules:
+  - id: tbb.start_onboarding
+    severity: high
+    category: onboarding
+    title: /start должен быстро объяснять первое действие
+    applies_to: [guest, user, creator, lead, admin, owner]
+    checks: [command:/start, menu:main, onboarding:first_action]
+    why: Пользователь должен понять за один экран, что бот делает и что нажать дальше.
+    recommendation: Добавить /start, главное меню и основную CTA-кнопку по роли.
+  - id: tbb.help_command
+    severity: medium
+    category: commands
+    title: /help должен быть доступен всем ролям
+    applies_to: [guest, user, creator, lead, admin, owner]
+    checks: [command:/help, navigation:help]
+    why: Сложный бот без справки заставляет пользователя угадывать команды и состояния.
+    recommendation: Добавить /help или явную кнопку помощи в каждом основном меню.
+  - id: tbb.command_design_clear
+    severity: medium
+    category: commands
+    title: Команды должны быть понятными и видимыми
+    applies_to: [all]
+    checks: [commands:visible, commands:descriptions]
+    why: Telegram commands работают как навигационный слой и должны совпадать с реальными flows.
+    recommendation: Проверить команды, их описания, роли и handler hints.
+  - id: tbb.inline_keyboard_layout
+    severity: medium
+    category: menus
+    title: Inline keyboards должны быть структурированы
+    applies_to: [all]
+    checks: [menus:buttons, callbacks:namespace]
+    why: Хороший bot UX использует inline keyboards для действий, а не заставляет пользователя писать команды руками.
+    recommendation: Группировать кнопки по меню, namespace и роли; избегать огромных меню.
+  - id: tbb.navigation_escape_paths
+    severity: high
+    category: navigation
+    title: У каждого сложного flow должен быть назад/отмена/помощь
+    applies_to: [all]
+    checks: [navigation:back, navigation:cancel, navigation:help]
+    why: Без escape paths пользователь застревает в многошаговых сценариях.
+    recommendation: Добавить nav:back, nav:cancel, nav:help или описать альтернативу.
+  - id: tbb.unknown_input_fallback
+    severity: medium
+    category: fallback
+    title: Непонятный ввод должен иметь fallback
+    applies_to: [all]
+    checks: [fallback:unknown_input]
+    why: Бот должен объяснить, что он ждёт, вместо молчания или traceback.
+    recommendation: Добавить fallback, который возвращает пользователя в меню и объясняет доступные действия.
+  - id: tbb.long_task_progress
+    severity: high
+    category: long_running_jobs
+    title: Долгие операции должны показывать progress/typing/status
+    applies_to: [video, audio, ai_generation, download, upload]
+    checks: [progress:status, telegram:typing_indicator]
+    why: Долгие задачи без статуса воспринимаются как поломка.
+    recommendation: Добавить progress message, typing indicator или status updates.
+  - id: tbb.human_readable_errors
+    severity: high
+    category: errors
+    title: Ошибки должны быть понятны пользователю
+    applies_to: [all]
+    checks: [errors:human_readable, errors:retry]
+    why: Пользователь не должен видеть технический traceback или молчаливый fail.
+    recommendation: Добавить безопасные тексты ошибок, retry и next action.
+  - id: tbb.empty_states
+    severity: medium
+    category: empty_states
+    title: Пустые состояния должны объяснять следующий шаг
+    applies_to: [queues, lists, tasks, payments, creators]
+    checks: [empty_state:message, empty_state:cta]
+    why: Пустая очередь/список без объяснения выглядит как ошибка.
+    recommendation: Добавить empty-state message и CTA.
+  - id: tbb.rate_limiting
+    severity: high
+    category: safety
+    title: Должны быть лимиты и защита от повторов
+    applies_to: [all]
+    checks: [rate_limit, idempotency, concurrency_guard]
+    why: Telegram bots без rate limiting могут упереться в лимиты API или повторно выполнить опасное действие.
+    recommendation: Добавить throttling, queue limits, idempotency и guard от double click.
+  - id: tbb.persistent_sessions
+    severity: medium
+    category: state
+    title: Production state не должен быть только in-memory
+    applies_to: [production, multi_step_flows]
+    checks: [state:persistent]
+    why: In-memory sessions теряются на рестарте и ломают многошаговый UX.
+    recommendation: Использовать SQLite/Redis/Postgres/file-backed state для production flows.
+  - id: tbb.global_error_handler
+    severity: high
+    category: reliability
+    title: Нужен global bot error handler
+    applies_to: [all]
+    checks: [error_handler:global]
+    why: Один неожиданный update не должен падать весь bot loop.
+    recommendation: Добавить bot.catch/add_error_handler/router.errors/global exception boundary.
+  - id: tbb.token_env_safety
+    severity: critical
+    category: security
+    title: Bot token и payment/API keys не должны быть hardcoded
+    applies_to: [all]
+    checks: [security:env_tokens]
+    why: Hardcoded token — прямой риск компрометации бота.
+    recommendation: Читать секреты из env/secret manager; не выводить их в logs/artifacts.
+  - id: tbb.analytics_observability
+    severity: medium
+    category: analytics
+    title: У бота должна быть наблюдаемость
+    applies_to: [production]
+    checks: [logging, analytics, liveness]
+    why: Без логов/метрик/health невозможно понять, что пользователи делают и где бот падает.
+    recommendation: Добавить structured logs, liveness, counters или events.
+  - id: tbb.polling_webhook_model
+    severity: medium
+    category: deployment
+    title: Модель запуска polling/webhook должна быть явной
+    applies_to: [production]
+    checks: [runtime:polling_or_webhook]
+    why: Непонятная модель запуска приводит к второму poller, конфликтам webhook/getUpdates и downtime.
+    recommendation: Явно описать polling/webhook, deploy target и запрет второго poller.
+  - id: tbb.monetization_guardrails
+    severity: medium
+    category: monetization
+    title: Платные действия требуют прозрачного UX
+    applies_to: [payments, subscriptions, premium]
+    checks: [payments:confirmation, payments:status, payments:limits]
+    why: Monetization без понятных лимитов, статуса и подтверждения вызывает недоверие.
+    recommendation: Добавить price/status/limits/refund/support UX для платных flows.

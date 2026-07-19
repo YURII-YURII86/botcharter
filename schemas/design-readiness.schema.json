@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/design-readiness.schema.json",
+  "title": "Bot Design Readiness v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "design_exists", "readiness_status", "production_design_allowed", "artifacts", "blockers"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotDesignReadiness"},
+    "generated_at": {"type": "string"},
+    "project_path": {"type": "string"},
+    "design_dir": {"type": "string"},
+    "design_exists": {"type": "boolean"},
+    "readiness_status": {"enum": ["missing_design_layer", "invalid", "blocked", "ready"]},
+    "readiness_score": {"type": "number", "minimum": 0, "maximum": 100},
+    "production_design_allowed": {"type": "boolean"},
+    "manifest_production_design_allowed": {"type": "boolean"},
+    "artifacts": {"type": "object"},
+    "schema_validation": {"type": "array", "items": {"type": "object"}},
+    "summary": {"type": "object"},
+    "blockers": {"type": "array", "items": {"$ref": "#/$defs/blocker"}},
+    "next_steps": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "blocker": {
+      "type": "object",
+      "required": ["id", "severity", "title", "recommendation"],
+      "properties": {
+        "id": {"type": "string"},
+        "severity": {"enum": ["error", "warning", "blocker", "info"]},
+        "title": {"type": "string"},
+        "evidence": {"type": "array"},
+        "recommendation": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

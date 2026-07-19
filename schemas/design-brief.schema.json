@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/design-brief.schema.json",
+  "title": "Bot Design Brief v0",
+  "type": "object",
+  "required": ["name", "roles"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotDesignBrief"},
+    "name": {"type": "string", "minLength": 1},
+    "title": {"type": "string"},
+    "description": {"type": "string"},
+    "roles": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/role"}},
+    "flows": {"type": "array", "items": {"$ref": "#/$defs/flow"}},
+    "features": {"type": "array", "items": {"anyOf": [{"type": "string"}, {"$ref": "#/$defs/flow"}]}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]{1,63}$"},
+    "role": {
+      "anyOf": [
+        {"$ref": "#/$defs/id"},
+        {
+          "type": "object",
+          "required": ["id"],
+          "properties": {
+            "id": {"$ref": "#/$defs/id"},
+            "title": {"type": "string"},
+            "description": {"type": "string"}
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "flow": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "title": {"type": "string"},
+        "description": {"type": "string"},
+        "command": {"type": "string", "pattern": "^/?[a-z][a-z0-9_]{1,31}$"},
+        "roles": {"type": "array", "items": {"$ref": "#/$defs/id"}}
+      },
+      "additionalProperties": true
+    }
+  },
+  "anyOf": [{"required": ["flows"]}, {"required": ["features"]}],
+  "additionalProperties": true
+}

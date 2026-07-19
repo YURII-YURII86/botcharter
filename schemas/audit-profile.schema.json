@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/audit-profile.schema.json",
+  "title": "Botctl audit profile v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "id", "title", "specs_dir", "read_only"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotRuntimeAuditProfile"},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]+$"},
+    "title": {"type": "string", "minLength": 1},
+    "specs_dir": {"const": "specs"},
+    "read_only": {"const": true},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

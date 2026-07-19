@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.venv/
+build/
+dist/
+*.egg-info/
+
+.tmp/
+.ai_context/active_tasks.json
+.ai_context/change_log.jsonl
+.ai_context/checkpoints/
+.ai_context/decision_log.md
+.ai_context/dependency_graph.md
+.ai_context/sessions.jsonl
+.ai_context/system_state.json

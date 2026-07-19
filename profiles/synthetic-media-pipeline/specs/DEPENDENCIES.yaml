@@ -1,0 +1,17 @@
+version: 0.1.0
+dependencies:
+  telegram_bot_api:
+    type: external_api
+    audit_categories: [telegram_bot_api]
+    risks: [network_failure, upload_limit]
+    required_guards: [authorization, size_check, human_readable_error]
+  yt_dlp:
+    type: external_tool
+    audit_categories: [media_downloader]
+    risks: [site_change, download_failure]
+    required_guards: [retries, isolated_job_directory]
+  ffmpeg:
+    type: external_process
+    audit_categories: [process_runner]
+    risks: [missing_binary, process_failure, timeout]
+    required_guards: [binary_check, bounded_process, cleanup]

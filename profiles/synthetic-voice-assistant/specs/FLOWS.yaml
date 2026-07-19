@@ -1,0 +1,12 @@
+version: 0.1.0
+flows:
+  process_audio:
+    status: observed
+    owner: product
+    entrypoints: [{type: message, pattern: audio_attachment}]
+    contract_tests: [audio_input_is_validated]
+  approve_result:
+    status: observed
+    owner: product
+    entrypoints: [{type: callback, pattern: "result:approve"}]
+    contract_tests: [approval_is_explicit]

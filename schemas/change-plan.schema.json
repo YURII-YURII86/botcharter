@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/change-plan.schema.json",
+  "title": "Botctl ChangePlan v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "id", "title", "status", "goal", "affected_nodes", "risk", "approval", "steps", "verification"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "ChangePlan"},
+    "id": {"type": "string"},
+    "title": {"type": "string"},
+    "status": {"enum": ["draft", "ready_for_review", "approved", "applying", "applied", "verified", "failed", "rolled_back", "cancelled", "blocked"]},
+    "goal": {"type": "string"},
+    "affected_nodes": {"type": "array", "items": {"type": "string"}},
+    "risk": {"type": "object", "required": ["level", "reason"]},
+    "approval": {"type": "object", "required": ["level", "reason"]},
+    "steps": {"type": "array"},
+    "verification": {"type": "array"},
+    "rollback": {"type": "array"}
+  },
+  "additionalProperties": true
+}

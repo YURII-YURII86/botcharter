@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://botctl.dev/schemas/test-matrix.schema.json",
+  "title":"Bot Test Matrix v0",
+  "type":"object",
+  "required":["apiVersion","kind","knowledge_status","tests"],
+  "properties":{
+    "apiVersion":{"const":"botctl.dev/v0"},
+    "kind":{"const":"BotTestMatrix"},
+    "knowledge_status":{"enum":["draft","reviewed","confirmed","deprecated","missing"]},
+    "tests":{"type":"array"},
+    "required_categories":{"type":"array","items":{"type":"string"}}
+  },
+  "additionalProperties":true
+}

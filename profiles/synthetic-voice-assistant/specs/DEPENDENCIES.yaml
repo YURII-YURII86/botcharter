@@ -1,0 +1,12 @@
+version: 0.1.0
+dependencies:
+  telegram_bot_api:
+    type: external_api
+    audit_categories: [telegram_bot_api]
+    risks: [network_failure, forbidden]
+    required_guards: [human_readable_error]
+  fictional_text_service:
+    type: external_api
+    audit_categories: [http_client]
+    risks: [timeout, quota, malformed_response]
+    required_guards: [timeout, retry_or_clear_error]

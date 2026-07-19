@@ -1,0 +1,42 @@
+version: 0.1.0
+purpose: "Machine-readable registry of BotCharter control-layer flows."
+flows:
+  public_alpha_release:
+    status: active
+    owner: control_layer
+    entrypoints:
+      - {type: maintainer, pattern: "prepare public alpha"}
+    services: [repository_hygiene_check, public_demo, package_build, clean_install_verification, multi_version_ci]
+    writes: [repository_release_artifacts]
+    must_not: [publish_without_owner_confirmation, include_private_identifiers, include_machine_specific_paths, depend_on_private_runtime_repositories]
+    contract_tests: [required_public_files_present, tracked_content_sanitized, public_demo_private_infrastructure_free, package_builds_and_installs]
+
+  adopt_existing_project:
+    status: active
+    owner: control_layer
+    entrypoints:
+      - {type: cli, pattern: "adopt --project <project> [--confirm]"}
+    services: [project_source_discovery, bootstrap_graph_builder, local_specs_scaffolder, design_draft_initializer, adoption_verifier]
+    writes: [.botctl_only_after_confirm]
+    must_not: [write_without_confirm, modify_runtime_source, overwrite_existing_control_files, contact_network, access_secrets_databases_or_logs]
+    contract_tests: [preview_is_read_only, confirm_required, runtime_tree_unchanged_outside_botctl, verification_passes_or_full_rollback]
+
+  runtime_architecture_audit:
+    status: active
+    owner: control_layer
+    entrypoints:
+      - {type: cli, pattern: "audit-runtime --project <bot-project>"}
+    services: [safe_source_scanner, runtime_spec_comparator, audit_reporter]
+    writes: [stdout_only]
+    must_not: [read_secrets, read_runtime_databases, modify_target_project, contact_external_services]
+    contract_tests: [target_tree_hash_unchanged, callback_drift_reported, event_drift_reported, storage_drift_reported, dependency_drift_reported]
+
+  guarded_runtime_diagnostics:
+    status: active
+    owner: control_layer
+    entrypoints:
+      - {type: cli, pattern: "probe-runtime|probe-http|probe-sqlite with explicit target and required confirmation"}
+    services: [local_metadata_probe, bounded_http_head_probe, immutable_sqlite_integrity_probe]
+    writes: [stdout_only]
+    must_not: [discover_targets_automatically, read_user_rows, follow_http_redirects, mutate_runtime]
+    contract_tests: [explicit_target_required, confirmation_required_for_network_or_database, response_body_unread, immutable_database_open]

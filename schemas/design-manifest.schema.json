@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://botctl.dev/schemas/design-manifest.schema.json",
+  "title":"Bot Design Manifest v0",
+  "type":"object",
+  "required":["apiVersion","kind","knowledge_status","production_design_allowed","artifacts"],
+  "properties":{
+    "apiVersion":{"const":"botctl.dev/v0"},
+    "kind":{"const":"BotDesignManifest"},
+    "knowledge_status":{"enum":["draft","reviewed","confirmed","deprecated","missing"]},
+    "production_design_allowed":{"type":"boolean"},
+    "requires_review":{"type":"boolean"},
+    "artifacts":{"type":"object"},
+    "blockers":{"type":"array"},
+    "open_questions":{"type":"array","items":{"type":"string"}}
+  },
+  "additionalProperties":true
+}

@@ -1,0 +1,33 @@
+version: 0.1.0
+contracts:
+  public_alpha_release:
+    checks:
+      - public_files_and_license_present
+      - public_demo_requires_no_network_or_private_repo
+      - release_check_rejects_private_identifiers_and_machine_paths
+      - wheel_and_sdist_contents_inspected
+      - external_publication_requires_owner_approval
+
+  adopt_existing_project:
+    checks:
+      - preview_default_and_read_only
+      - confirm_required_for_writes
+      - writes_limited_to_new_botctl_directory
+      - existing_files_never_overwritten
+      - verification_failure_rolls_back_created_files
+
+  runtime_audit:
+    checks:
+      - audit_is_static_and_read_only
+      - unsafe_paths_are_skipped
+      - callbacks_events_storage_dependencies_and_contract_drift_reported
+      - target_project_tree_remains_unchanged
+
+  guarded_runtime_diagnostics:
+    checks:
+      - explicit_target_required
+      - network_and_database_confirmation_required
+      - no_secret_log_or_user_row_access
+      - no_runtime_writes_restarts_or_mutating_signals
+      - bounded_network_request_without_auth_redirect_or_body
+      - sqlite_opened_read_only_and_immutable

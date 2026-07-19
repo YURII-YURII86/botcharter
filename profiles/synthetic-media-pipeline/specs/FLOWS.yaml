@@ -1,0 +1,12 @@
+version: 0.1.0
+flows:
+  process_media_url:
+    status: observed
+    owner: product
+    entrypoints: [{type: message, pattern: media_url}]
+    contract_tests:
+      - extract_urls
+      - isolated_processing_job
+    contract_evidence:
+      extract_urls: [tests/test_basic.py]
+      isolated_processing_job: [tests/test_pipeline.py]

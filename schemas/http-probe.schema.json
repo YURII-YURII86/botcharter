@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://botctl.dev/schemas/http-probe.schema.json",
+  "title": "Explicit HTTP health probe v0",
+  "type": "object",
+  "required": ["apiVersion", "kind", "generated_at", "read_only", "scope", "target", "summary", "check", "safety"],
+  "properties": {
+    "apiVersion": {"const": "botctl.dev/v0"},
+    "kind": {"const": "BotHttpHealthProbe"},
+    "generated_at": {"type": "string"},
+    "read_only": {"const": true},
+    "scope": {"const": "explicit_http_head"},
+    "target": {"type": "object"},
+    "summary": {"type": "object"},
+    "check": {"type": "object"},
+    "safety": {"type": "object"}
+  }
+}

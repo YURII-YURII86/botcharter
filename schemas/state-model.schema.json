@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://botctl.dev/schemas/state-model.schema.json",
+  "title":"Bot State Model v0",
+  "type":"object",
+  "required":["apiVersion","kind","knowledge_status","requires_review","production_design_allowed"],
+  "properties":{
+    "apiVersion":{"const":"botctl.dev/v0"},
+    "kind":{"const":"BotStateModel"},
+    "knowledge_status":{"enum":["draft","reviewed","confirmed","deprecated","missing"]},
+    "requires_review":{"type":"boolean"},
+    "production_design_allowed":{"const":false},
+    "open_questions":{"type":"array","items":{"type":"string"}}
+  },
+  "additionalProperties":true
+}
